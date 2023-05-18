@@ -8,7 +8,8 @@ export async function ranking(req, res){
                             JOIN "Shorted_Links" ON "Shorted_Links".user_id = "Users".id
                             JOIN "Sessions" ON "Users".id = "Sessions".user_id
                             GROUP BY "Users".id
-                            ORDER BY "visitCount" DESC`
+                            ORDER BY "visitCount" DESC
+                            LIMIT 10`
         const ranking = await db.query(searchRank);
 
         console.table(ranking.rows);
