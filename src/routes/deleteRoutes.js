@@ -5,6 +5,8 @@ const Delete = express();
 Delete.use(cors());
 Delete.use(express.json());
 
-Delete.delete("/urls/:id");
+import { deleteById } from "../controllers/deleteByIdController.js";
+
+Delete.delete("/urls/:id", deleteById);
 
 export default Delete;
