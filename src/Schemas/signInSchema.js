@@ -1,11 +1,11 @@
 import Joi from "joi";
 
 const signInSchema = Joi.object({
-    Email: Joi.string()
-            .email()
-            .required(),
+        Email: Joi.string()
+                .email()
+                .required(),
 
-    Password: Joi.string()
+        Password: Joi.string()
                 .required()
 });
 
