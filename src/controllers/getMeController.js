@@ -5,9 +5,12 @@ export async function getMe(req, res){
     if(!auth) return res.status(401).send("Token não identificado");
     const token = auth.replace('Baerer ', '');
 
+    let validate;
     try{
-        const querySession = `SELECT * FROM "Sessions" WHERE token = $1`;
-        const validate = await db.query(querySession, [token]);
+        const querySession =   `SELECT "Sessions".*, "Users".name FROM "Sessions" 
+                                JOIN "Users" ON "Sessions".user_id = "Users".id
+                                WHERE token = $1`;
+        validate = await db.query(querySession, [token]);
         if(validate.rowCount === 0) return res.status(401).send("Sessão encerrada");
     }catch(error){
         return res.status(500).send(error)
@@ -29,10 +32,11 @@ export async function getMe(req, res){
         
         const dataMe = {
             id: me.rows[0].id,
-            name: me.rows[0].name,
+            name: validate.rows[0].name,
             visitCount: me.rows[0].visitCount,
             shortenedUrls: links.rows
         }
+        
 
         return res.status(200).send(dataMe);
     }catch(error){
