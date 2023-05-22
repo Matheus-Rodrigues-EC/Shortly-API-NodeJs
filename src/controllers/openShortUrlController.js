@@ -4,6 +4,13 @@ export async function openShortUrl(req, res){
     const {shortUrl} = req.params;
 
     try{
+        const searchUrl = `UPDATE "Shorted_Links" SET "visitCount" = ("visitCount" + 1) WHERE "shortUrl" = $1`;
+        await db.query(searchUrl, [shortUrl]);
+    }catch(error){
+        return res.status(500).send(error);
+    }
+
+    try{
         const searchUrl = `SELECT * FROM "Shorted_Links" WHERE "shortUrl" = $1`;
         const link = await db.query(searchUrl, [shortUrl]);
         if(link.rowCount === 0){

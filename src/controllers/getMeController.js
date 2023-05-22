@@ -17,13 +17,18 @@ export async function getMe(req, res){
     }
 
     try{
-        const searchMe =   `SELECT "Users".id, "Users".name, SUM("Shorted_Links"."visitCount") as "visitCount"
-                            FROM "Shorted_Links"
-                            JOIN "Users" ON "Shorted_Links".user_id = "Users".id
+        const searchMe =   `SELECT "Users".id, "Users".name
+                            FROM "Users"
                             JOIN "Sessions" ON "Users".id = "Sessions".user_id
                             WHERE "Sessions".token = $1
-                            group by "Users".id`
+                            GROUP BY "Users".id`
         const me = await db.query(searchMe, [token]);
+
+        const searchSum =   `SELECT SUM("Shorted_Links"."visitCount") as "visitCount"
+                            FROM "Shorted_Links"
+                            JOIN "Sessions" ON "Shorted_Links".user_id = "Sessions".user_id
+                            WHERE "Sessions".token = $1`;
+        const sum = await db.query(searchSum, [token])
 
         const queryLinks = `SELECT "Shorted_Links".id, "Shorted_Links"."shortUrl", "Shorted_Links".url, "Shorted_Links"."visitCount" FROM "Shorted_Links"
                             JOIN "Sessions" ON "Shorted_Links".user_id = "Sessions".user_id
@@ -33,11 +38,9 @@ export async function getMe(req, res){
         const dataMe = {
             id: me.rows[0].id,
             name: validate.rows[0].name,
-            visitCount: me.rows[0].visitCount,
+            visitCount: sum.rows[0].visitCount,
             shortenedUrls: links.rows
         }
-        
-
         return res.status(200).send(dataMe);
     }catch(error){
         return res.status(500).send(error);
