@@ -6,6 +6,9 @@ export default function signUpValidation(req, res, next){
     
     if(signUpSchema.validate({Name: name, Email: email, Password: password}).error !== undefined){
 
+        if(signUpSchema.validate({Name: name, Email: email, Password: password}).error.message === '"Name" is not allowed to be empty'){
+            return res.status(422).send("O campo NOME é obrigatório.")
+        }
         if(signUpSchema.validate({Name: name, Email: email, Password: password}).error.message === '"Name" length must be at least 3 characters long'){
             return res.status(422).send("O campo NOME deve conter mais de 3 caracteres.")
         }
