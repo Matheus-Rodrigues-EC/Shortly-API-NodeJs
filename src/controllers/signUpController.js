@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 export async function signUp(req, res){
     const { name, email, password } = req.body;
-
+    console.log(req.body);
     try{    
         const search = 'SELECT * FROM "Users" WHERE email = $1';
         const users = await db.query(search, [email]);
@@ -15,7 +15,7 @@ export async function signUp(req, res){
     const hashpass = bcrypt.hashSync(password, 5);
 
     try{
-        const insert =  `INSERT INTO "Users" (name, email, password, createdAt)
+        const insert =  `INSERT INTO "Users" (name, email, password, "createdAt")
                         VALUES ($1, $2, $3, now());`;
         await db.query(insert, [name, email, hashpass]);
         return res.sendStatus(201);
