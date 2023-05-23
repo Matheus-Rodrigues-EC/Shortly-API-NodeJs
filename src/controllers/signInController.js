@@ -12,7 +12,7 @@ export async function signIn(req, res){
         if((user.rowCount !== 0) && (bcrypt.compareSync(password, user.rows[0].password))){
             const token = uuid();
 
-            const insertSession =  `INSERT INTO "Sessions" (user_id, token, created_at)
+            const insertSession =  `INSERT INTO "Sessions" (user_id, token, createdAt)
                                     VALUES ($1, $2, now())`;
             await db.query(insertSession, [user.rows[0].id, token]);
             return res.status(200).send({token});

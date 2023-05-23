@@ -5,7 +5,7 @@
 -- Dumped from database version 14.5
 -- Dumped by pg_dump version 14.4
 
--- Started on 2023-05-23 16:46:54
+-- Started on 2023-05-23 17:07:21
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 212 (class 1259 OID 24911)
+-- TOC entry 212 (class 1259 OID 24987)
 -- Name: Sessions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -31,12 +31,12 @@ CREATE TABLE public."Sessions" (
     id integer NOT NULL,
     user_id integer NOT NULL,
     token character varying(40) NOT NULL,
-    created_at date NOT NULL
+    "createdAt" date NOT NULL
 );
 
 
 --
--- TOC entry 211 (class 1259 OID 24910)
+-- TOC entry 211 (class 1259 OID 24986)
 -- Name: Sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -59,7 +59,7 @@ ALTER SEQUENCE public."Sessions_id_seq" OWNED BY public."Sessions".id;
 
 
 --
--- TOC entry 214 (class 1259 OID 24925)
+-- TOC entry 214 (class 1259 OID 25001)
 -- Name: Shorted_Links; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -69,12 +69,12 @@ CREATE TABLE public."Shorted_Links" (
     url character varying(250) NOT NULL,
     "shortUrl" character varying(7) NOT NULL,
     "visitCount" integer DEFAULT 0,
-    created_at date NOT NULL
+    "createdAt" date NOT NULL
 );
 
 
 --
--- TOC entry 213 (class 1259 OID 24924)
+-- TOC entry 213 (class 1259 OID 25000)
 -- Name: Shorted_Links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -97,7 +97,7 @@ ALTER SEQUENCE public."Shorted_Links_id_seq" OWNED BY public."Shorted_Links".id;
 
 
 --
--- TOC entry 210 (class 1259 OID 24901)
+-- TOC entry 210 (class 1259 OID 24977)
 -- Name: Users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -107,12 +107,12 @@ CREATE TABLE public."Users" (
     email character varying(50) NOT NULL,
     password character varying(60) NOT NULL,
     "linksCount" integer DEFAULT 0,
-    created_at date NOT NULL
+    "createdAt" date NOT NULL
 );
 
 
 --
--- TOC entry 209 (class 1259 OID 24900)
+-- TOC entry 209 (class 1259 OID 24976)
 -- Name: Users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -135,7 +135,7 @@ ALTER SEQUENCE public."Users_id_seq" OWNED BY public."Users".id;
 
 
 --
--- TOC entry 3176 (class 2604 OID 24914)
+-- TOC entry 3176 (class 2604 OID 24990)
 -- Name: Sessions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -143,7 +143,7 @@ ALTER TABLE ONLY public."Sessions" ALTER COLUMN id SET DEFAULT nextval('public."
 
 
 --
--- TOC entry 3177 (class 2604 OID 24928)
+-- TOC entry 3177 (class 2604 OID 25004)
 -- Name: Shorted_Links id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -151,7 +151,7 @@ ALTER TABLE ONLY public."Shorted_Links" ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 3174 (class 2604 OID 24904)
+-- TOC entry 3174 (class 2604 OID 24980)
 -- Name: Users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -159,7 +159,7 @@ ALTER TABLE ONLY public."Users" ALTER COLUMN id SET DEFAULT nextval('public."Use
 
 
 --
--- TOC entry 3184 (class 2606 OID 24916)
+-- TOC entry 3184 (class 2606 OID 24992)
 -- Name: Sessions Sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -168,7 +168,7 @@ ALTER TABLE ONLY public."Sessions"
 
 
 --
--- TOC entry 3186 (class 2606 OID 24918)
+-- TOC entry 3186 (class 2606 OID 24994)
 -- Name: Sessions Sessions_token_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -177,7 +177,7 @@ ALTER TABLE ONLY public."Sessions"
 
 
 --
--- TOC entry 3188 (class 2606 OID 24931)
+-- TOC entry 3188 (class 2606 OID 25007)
 -- Name: Shorted_Links Shorted_Links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -186,7 +186,7 @@ ALTER TABLE ONLY public."Shorted_Links"
 
 
 --
--- TOC entry 3180 (class 2606 OID 24909)
+-- TOC entry 3180 (class 2606 OID 24985)
 -- Name: Users Users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -195,7 +195,7 @@ ALTER TABLE ONLY public."Users"
 
 
 --
--- TOC entry 3182 (class 2606 OID 24907)
+-- TOC entry 3182 (class 2606 OID 24983)
 -- Name: Users Users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -204,7 +204,7 @@ ALTER TABLE ONLY public."Users"
 
 
 --
--- TOC entry 3189 (class 2606 OID 24919)
+-- TOC entry 3189 (class 2606 OID 24995)
 -- Name: Sessions Sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -213,7 +213,7 @@ ALTER TABLE ONLY public."Sessions"
 
 
 --
--- TOC entry 3190 (class 2606 OID 24932)
+-- TOC entry 3190 (class 2606 OID 25008)
 -- Name: Shorted_Links Shorted_Links_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -221,7 +221,7 @@ ALTER TABLE ONLY public."Shorted_Links"
     ADD CONSTRAINT "Shorted_Links_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."Users"(id);
 
 
--- Completed on 2023-05-23 16:46:56
+-- Completed on 2023-05-23 17:07:22
 
 --
 -- PostgreSQL database dump complete

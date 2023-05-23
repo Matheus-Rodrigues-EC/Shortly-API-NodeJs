@@ -12,7 +12,7 @@ export async function shortener(req, res){
         const id = user_id.rows[0].user_id;
 
         const shortened = nanoid(7);
-        const insert = `INSERT INTO "Shorted_Links" (user_id, url, "shortUrl", created_at)
+        const insert = `INSERT INTO "Shorted_Links" (user_id, url, "shortUrl", createdAt)
                         VALUES ($1, $2, $3, now());`;
         await db.query(insert, [id, url, shortened]);
         const updateLinksCount =   `UPDATE "Users" SET "linksCount" = "linksCount" + 1 
