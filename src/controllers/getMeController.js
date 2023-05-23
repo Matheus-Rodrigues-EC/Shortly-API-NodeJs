@@ -27,7 +27,9 @@ export async function getMe(req, res){
         const searchSum =   `SELECT SUM("Shorted_Links"."visitCount") as "visitCount"
                             FROM "Shorted_Links"
                             JOIN "Sessions" ON "Shorted_Links".user_id = "Sessions".user_id
-                            WHERE "Sessions".token = $1`;
+                            WHERE "Sessions".token = $1
+                            GROUP BY url
+                            ORDER BY "visitCount" DESC`;
         const sum = await db.query(searchSum, [token])
 
         const queryLinks = `SELECT "Shorted_Links".id, "Shorted_Links"."shortUrl", "Shorted_Links".url, "Shorted_Links"."visitCount" FROM "Shorted_Links"

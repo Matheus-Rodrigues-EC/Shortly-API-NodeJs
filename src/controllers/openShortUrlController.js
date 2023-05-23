@@ -17,7 +17,7 @@ export async function openShortUrl(req, res){
             return res.status(404).send("Url não encontrada.");
         }else{
             const url = link.rows[0].url;
-            return res.redirect(url);
+            return res.status(303).send(url);
         }
     }catch(error){
         return res.status(500).send(error);
